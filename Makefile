@@ -15,9 +15,11 @@ help:
 	@echo 'Makefile for `de-casteljau-bakeoff` project'
 	@echo ''
 	@echo 'Usage:'
-	@echo '   make hygiene       Use `emacs` to indent `.f90` files'
-	@echo '   make shared        Create the `libbakeoff` shared library'
-	@echo '   make shared-opt    Create the `libbakeoffopt` (optimized) shared library'
+	@echo '   make hygiene          Use `emacs` to indent `.f90` files'
+	@echo '   make shared           Create `bakeoff` Python package that wraps Fortran implementations'
+	@echo '   make verify-shared    Verify the `bakeoff` Python package'
+	@echo '   make shared-opt       Create `bakeoff_opt` Python package that wraps (optimized) Fortran implementations'
+	@echo '   make clean            Delete all generated files'
 	@echo ''
 
 ################################################################################
@@ -36,7 +38,8 @@ OPTIMIZED_FCFLAGS ?= -O3 -march=native -ffast-math -funroll-loops
 # NOTE: **Must** specify the order for source files.
 F90_SOURCES := \
 	$(SRC_DIR)/types$(F90) \
-	$(SRC_DIR)/forall_$(F90)
+	$(SRC_DIR)/forall_$(F90) \
+	$(SRC_DIR)/do_$(F90)
 F90_OBJS := $(patsubst $(SRC_DIR)/%$(F90), $(BUILD_DIR)/%$(OBJ), $(F90_SOURCES))
 
 ################################################################################
@@ -63,9 +66,23 @@ shared: $(F90_OBJS)
 	cd src/python-bakeoff/ && \
 	  ../../.venv/bin/python setup.py build_ext --inplace
 
+.PHONY: verify-shared
+verify-shared: src/python-bakeoff/verify.py
+	cd src/python-bakeoff/ && \
+	  ../../.venv/bin/python verify.py
+
 .PHONY: shared-opt
 shared-opt: $(F90_OBJS)
 	@echo 'TODO'
 
 src/python-bakeoff/bakeoff/_binary.c: src/python-bakeoff/bakeoff/_binary.pyx
 	.venv/bin/cython src/python-bakeoff/bakeoff/_binary.pyx
+
+.PHONY: clean
+clean:
+	rm -fr \
+	  build/ \
+	  src/python-bakeoff/bakeoff/__pycache__/ \
+	  src/python-bakeoff/bakeoff/build/
+	rm -f \
+	  src/python-bakeoff/bakeoff/_binary.*.so

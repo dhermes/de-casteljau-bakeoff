@@ -29,6 +29,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 EXTRA_OBJECTS = (
     os.path.join(HERE, "..", "..", "build", "types.o"),
     os.path.join(HERE, "..", "..", "build", "forall_.o"),
+    os.path.join(HERE, "..", "..", "build", "do_.o"),
 )
 
 
