@@ -39,7 +39,8 @@ OPTIMIZED_FCFLAGS ?= -O3 -march=native -ffast-math -funroll-loops
 F90_SOURCES := \
 	$(SRC_DIR)/types$(F90) \
 	$(SRC_DIR)/forall_$(F90) \
-	$(SRC_DIR)/do_$(F90)
+	$(SRC_DIR)/do_$(F90) \
+	$(SRC_DIR)/spread_$(F90)
 F90_OBJS := $(patsubst $(SRC_DIR)/%$(F90), $(BUILD_DIR)/%$(OBJ), $(F90_SOURCES))
 
 ################################################################################
@@ -61,8 +62,11 @@ $(BUILD_DIR):
 $(BUILD_DIR)/%$(OBJ): $(SRC_DIR)/%$(F90) $(BUILD_DIR)
 	$(FC) $(BASE_FCFLAGS) $(OPTIMIZED_FCFLAGS) -c $< -o $@
 
+src/python-bakeoff/bakeoff/_binary.c: src/python-bakeoff/bakeoff/_binary.pyx
+	.venv/bin/cython src/python-bakeoff/bakeoff/_binary.pyx
+
 .PHONY: shared
-shared: $(F90_OBJS)
+shared: $(F90_OBJS) src/python-bakeoff/bakeoff/_binary.c
 	cd src/python-bakeoff/ && \
 	  ../../.venv/bin/python setup.py build_ext --inplace
 
@@ -75,14 +79,12 @@ verify-shared: src/python-bakeoff/verify.py
 shared-opt: $(F90_OBJS)
 	@echo 'TODO'
 
-src/python-bakeoff/bakeoff/_binary.c: src/python-bakeoff/bakeoff/_binary.pyx
-	.venv/bin/cython src/python-bakeoff/bakeoff/_binary.pyx
-
 .PHONY: clean
 clean:
 	rm -fr \
 	  build/ \
 	  src/python-bakeoff/bakeoff/__pycache__/ \
-	  src/python-bakeoff/bakeoff/build/
+	  src/python-bakeoff/build/
 	rm -f \
+	  src/fortran/*.f90~ \
 	  src/python-bakeoff/bakeoff/_binary.*.so
