@@ -21,7 +21,7 @@ contains
 
   subroutine forall1( &
        num_nodes, dimension_, nodes, num_vals, s_vals, evaluated) &
-       bind(c, name='forall1')
+       bind(c, name='BAKEOFF_forall1')
 
     integer(c_int), intent(in) :: num_nodes, dimension_
     real(c_double), intent(in) :: nodes(dimension_, num_nodes)
@@ -52,7 +52,7 @@ contains
 
   subroutine forall2( &
        num_nodes, dimension_, nodes, num_vals, s_vals, evaluated) &
-       bind(c, name='forall2')
+       bind(c, name='BAKEOFF_forall2')
 
     integer(c_int), intent(in) :: num_nodes, dimension_
     real(c_double), intent(in) :: nodes(dimension_, num_nodes)
@@ -83,7 +83,7 @@ contains
 
   subroutine forall3( &
        num_nodes, dimension_, nodes, num_vals, s_vals, evaluated) &
-       bind(c, name='forall3')
+       bind(c, name='BAKEOFF_forall3')
 
     integer(c_int), intent(in) :: num_nodes, dimension_
     real(c_double), intent(in) :: nodes(dimension_, num_nodes)

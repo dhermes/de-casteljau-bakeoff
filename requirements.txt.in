@@ -1,4 +1,5 @@
 bezier
+cython
 jupyter
 matplotlib
 numpy

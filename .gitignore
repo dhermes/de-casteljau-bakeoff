@@ -130,3 +130,6 @@ dmypy.json
 
 # Emacs
 *~
+
+# `gfortran`
+*.mod
