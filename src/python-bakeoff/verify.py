@@ -26,6 +26,7 @@ def main():
         bakeoff.spread1,
         bakeoff.spread2,
         bakeoff.spread3,
+        bakeoff.serial,
     )
     nodes = np.asfortranarray([[1.0, 1.0, 2.0, 2.0], [0.0, 1.0, 0.0, 1.0]])
     s_vals = np.asfortranarray([0.0, 0.5, 1.0])

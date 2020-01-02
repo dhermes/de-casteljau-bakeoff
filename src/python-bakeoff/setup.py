@@ -33,6 +33,7 @@ EXTRA_OBJECTS = (
     os.path.join(HERE, "..", "..", "build", "forall_.o"),
     os.path.join(HERE, "..", "..", "build", "do_.o"),
     os.path.join(HERE, "..", "..", "build", "spread_.o"),
+    os.path.join(HERE, "..", "..", "build", "serial_.o"),
 )
 FORTRAN_LIBRARY_PREFIX = "libraries: ="
 GFORTRAN_MISSING_LIBS = """\

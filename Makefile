@@ -40,7 +40,8 @@ F90_SOURCES := \
 	$(SRC_DIR)/types$(F90) \
 	$(SRC_DIR)/forall_$(F90) \
 	$(SRC_DIR)/do_$(F90) \
-	$(SRC_DIR)/spread_$(F90)
+	$(SRC_DIR)/spread_$(F90) \
+	$(SRC_DIR)/serial_$(F90)
 F90_OBJS := $(patsubst $(SRC_DIR)/%$(F90), $(BUILD_DIR)/%$(OBJ), $(F90_SOURCES))
 
 ################################################################################
