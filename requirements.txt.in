@@ -2,5 +2,7 @@ black
 cython
 j2cli
 jupyter
+matplotlib
 numpy
 pip-tools
+seaborn
