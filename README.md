@@ -3,22 +3,28 @@
 > Experimenting with competing implementations for simultaneous
 > B&#XE9;zier Curve evaluation
 
+## Overview
+
+```
+$ make
+Makefile for `de-casteljau-bakeoff` project
+
+Usage:
+   make venv                              Create Python virtual environment
+   make run-jupyter                       Run Jupyter notebook(s)
+   make update-requirements               Update Python requirements
+   make hygiene                           Use `emacs` to indent `.f90` files
+   make shared [OPTIMIZED=true]           Create `bakeoff` Python package that wraps Fortran implementations
+   make verify-shared [OPTIMIZED=true]    Verify the `bakeoff` Python package
+   make clean                             Delete all generated files
+
+```
+
 ## Run Notebook Server
 
 ```
-python -m pip install --upgrade pip virtualenv
-python -m virtualenv --python=python3.7 .venv
-.venv/bin/python -m pip install --requirement requirements.txt
-.venv/bin/jupyter notebook
-```
-
-## Requirements
-
-To update
-
-```
-python -m pip install --upgrade pip-tools  # For `pip-compile`
-pip-compile --generate-hashes --output-file=requirements.txt requirements.txt.in
+make venv
+make run-jupyter
 ```
 
 ## Hygiene

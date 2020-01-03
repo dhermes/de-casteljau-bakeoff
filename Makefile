@@ -15,6 +15,9 @@ help:
 	@echo 'Makefile for `de-casteljau-bakeoff` project'
 	@echo ''
 	@echo 'Usage:'
+	@echo '   make venv                              Create Python virtual environment'
+	@echo '   make run-jupyter                       Run Jupyter notebook(s)'
+	@echo '   make update-requirements               Update Python requirements'
 	@echo '   make hygiene                           Use `emacs` to indent `.f90` files'
 	@echo '   make shared [OPTIMIZED=true]           Create `bakeoff` Python package that wraps Fortran implementations'
 	@echo '   make verify-shared [OPTIMIZED=true]    Verify the `bakeoff` Python package'
@@ -59,6 +62,22 @@ F90_OBJS := $(patsubst $(SRC_DIR)/%$(F90), $(BUILD_DIR)/%$(OBJ), $(F90_SOURCES))
 ################################################################################
 # Targets
 ################################################################################
+
+.PHONY: venv
+venv:
+	python -m pip install --upgrade pip virtualenv
+	test -d .venv || python -m virtualenv --python=python3.7 .venv
+	.venv/bin/python -m pip install --requirement requirements.txt
+
+.PHONY: run-jupyter
+run-jupyter:
+	.venv/bin/jupyter notebook
+
+requirements.txt: requirements.txt.in
+	.venv/bin/pip-compile --generate-hashes --upgrade --output-file=requirements.txt requirements.txt.in
+
+.PHONY: update-requirements
+update-requirements: requirements.txt
 
 .PHONY: hygiene
 hygiene:
