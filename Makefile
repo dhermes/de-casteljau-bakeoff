@@ -57,7 +57,8 @@ F90_SOURCES := \
 	$(SRC_DIR)/forall_$(F90) \
 	$(SRC_DIR)/do_$(F90) \
 	$(SRC_DIR)/spread_$(F90) \
-	$(SRC_DIR)/serial_$(F90)
+	$(SRC_DIR)/serial_$(F90) \
+	$(SRC_DIR)/vs_algorithm$(F90)
 F90_OBJS := $(patsubst $(SRC_DIR)/%$(F90), $(BUILD_DIR)/%$(OBJ), $(F90_SOURCES))
 
 ################################################################################
@@ -137,6 +138,8 @@ verify-shared: $(PYTHON_DIR)/verify.py shared
 .PHONY: clean
 clean:
 	rm -fr \
+	  .ipynb_checkpoints/ \
+	  __pycache__/ \
 	  src/python-bakeoff-opt/__pycache__/ \
 	  src/python-bakeoff-opt/bakeoff_opt/__pycache__/ \
 	  src/python-bakeoff-opt/build/ \

@@ -28,6 +28,7 @@ BAKEOFF_FUNCTIONS = (
     bakeoff.spread2,
     bakeoff.spread3,
     bakeoff.serial,
+    bakeoff.vs_algorithm,
 )
 BAKEOFF_OPT_FUNCTIONS = (
     bakeoff_opt.forall1,
@@ -40,7 +41,12 @@ BAKEOFF_OPT_FUNCTIONS = (
     bakeoff_opt.spread2,
     bakeoff_opt.spread3,
     bakeoff_opt.serial,
+    bakeoff_opt.vs_algorithm,
 )
+
+
+def fn_name(fn):
+    return f"{fn.__module__.replace('._binary', '')}.{fn.__qualname__}"
 
 
 def verify_implementations(nodes, s_vals):
@@ -49,7 +55,7 @@ def verify_implementations(nodes, s_vals):
 
     equals = {}
     for fn in fns:
-        key = f"{fn.__module__.replace('._binary', '')}.{fn.__qualname__}"
+        key = fn_name(fn)
         points_also = fn(nodes, s_vals)
         if key in equals:
             raise KeyError(key)

@@ -83,6 +83,7 @@ def get_extra_objects(here):
         os.path.join(here, "object_files", "do_.o"),
         os.path.join(here, "object_files", "spread_.o"),
         os.path.join(here, "object_files", "serial_.o"),
+        os.path.join(here, "object_files", "vs_algorithm.o"),
     )
 
 
