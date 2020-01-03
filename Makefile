@@ -18,7 +18,7 @@ help:
 	@echo '   make venv                               Create Python virtual environment'
 	@echo '   make run-jupyter                        Run Jupyter notebook(s)'
 	@echo '   make update-requirements                Update Python requirements'
-	@echo '   make hygiene                            Use `emacs` to indent `.f90` files'
+	@echo '   make hygiene                            Autoformat `.f90` and `.py` files and verify "copied" files'
 	@echo '   make shared [OPTIMIZED=true]            Build `bakeoff(_opt)` Python package that wraps Fortran implementations'
 	@echo '   make install-shared [OPTIMIZED=true]    Install `bakeoff(_opt)` Python package into virtual environment'
 	@echo '   make verify-shared [OPTIMIZED=true]     Verify the `bakeoff(_opt)` Python package'
@@ -80,17 +80,27 @@ requirements.txt: requirements.txt.in
 .PHONY: update-requirements
 update-requirements: requirements.txt
 
-.PHONY: hygiene
-hygiene:
+.PHONY: blacken
+blacken:
+	.venv/bin/black --line-length 79 $(shell git ls-files '*.py')
+
+.PHONY: emacs-fmt-f90
+emacs-fmt-f90:
 	git ls-files -- '*.f90' | \
 	  xargs -I{} emacs \
 	    --batch {} \
 		--funcall mark-whole-buffer \
 		--funcall f90-indent-subprogram \
 		--funcall save-buffer
+
+.PHONY: verify-file-copies
+verify-file-copies:
 	diff -s -q \
 	  src/python-bakeoff/setup_shared.py \
 	  src/python-bakeoff-opt/setup_shared.py
+
+.PHONY: hygiene
+hygiene: emacs-fmt-f90 blacken verify-file-copies
 
 $(BUILD_DIR):
 	mkdir -p $(BUILD_DIR)

@@ -1,10 +1,6 @@
-bezier
+black
 cython
 j2cli
 jupyter
-matplotlib
 numpy
 pip-tools
-seaborn
-
-https://github.com/dhermes/fortran_magic/archive/0.6.2.tar.gz

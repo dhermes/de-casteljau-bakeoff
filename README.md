@@ -13,7 +13,7 @@ Usage:
    make venv                               Create Python virtual environment
    make run-jupyter                        Run Jupyter notebook(s)
    make update-requirements                Update Python requirements
-   make hygiene                            Use `emacs` to indent `.f90` files
+   make hygiene                            Autoformat `.f90` and `.py` files and verify "copied" files
    make shared [OPTIMIZED=true]            Build `bakeoff(_opt)` Python package that wraps Fortran implementations
    make install-shared [OPTIMIZED=true]    Install `bakeoff(_opt)` Python package into virtual environment
    make verify-shared [OPTIMIZED=true]     Verify the `bakeoff(_opt)` Python package

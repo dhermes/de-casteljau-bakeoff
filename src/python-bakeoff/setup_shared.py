@@ -10,6 +10,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# NOTE: This file is copied (rather than symlinked) since a symlink **outside**
+#       of the package tree won't get copied during a ``pip install``.
+
 import os
 import pathlib
 import subprocess
