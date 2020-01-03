@@ -1,5 +1,6 @@
 bezier
 cython
+j2cli
 jupyter
 matplotlib
 numpy

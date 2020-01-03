@@ -103,6 +103,9 @@ ipywidgets==7.5.1 \
     --hash=sha256:13ffeca438e0c0f91ae583dc22f50379b9d6b28390ac7be8b757140e9a771516 \
     --hash=sha256:e945f6e02854a74994c596d9db83444a1850c01648f1574adf144fbbabe05c97 \
     # via jupyter
+j2cli==0.3.10 \
+    --hash=sha256:6f6f643b3fa5c0f72fbe9f07e246f8e138052b9f689e14c7c64d582c59709ae4 \
+    --hash=sha256:b005a40750b7b7c1c4c6e7209dc2bd6d10dee8a93a939d80884f2e2fb427d343
 jedi==0.15.2 \
     --hash=sha256:1349c1e8c107095a55386628bb3b2a79422f3a2cab8381e34ce19909e0cf5064 \
     --hash=sha256:e909527104a903606dd63bea6e8e888833f0ef087057829b89a18364a856f807 \
@@ -110,7 +113,7 @@ jedi==0.15.2 \
 jinja2==2.10.3 \
     --hash=sha256:74320bb91f31270f9551d46522e33af46a80c3d619f4a4bf42b3164d30b5911f \
     --hash=sha256:9fe95f19286cfefaa917656583d020be14e7859c6b0252588391e47db34527de \
-    # via nbconvert, notebook
+    # via j2cli, nbconvert, notebook
 jsonschema==3.2.0 \
     --hash=sha256:4e5b3cf8216f577bee9ce139cbe72eca3ea4f292ec60928ff24758ce626cd163 \
     --hash=sha256:c8a85b28d377cc7737e46e2d9f2b4f44ee3c0e1deac6bf46ddefc7187d30797a \

@@ -75,6 +75,12 @@ $(BUILD_DIR):
 $(BUILD_DIR)/%$(OBJ): $(SRC_DIR)/%$(F90) $(BUILD_DIR)
 	$(FC) $(C_PREPROCESSOR) -DOPT=$(DOPT) $(FCFLAGS) -c $< -o $@
 
+src/python-bakeoff/bakeoff/_binary.pyx: pyx_template.j2
+	PREFIX=BAKEOFF .venv/bin/j2 pyx_template.j2 -o src/python-bakeoff/bakeoff/_binary.pyx
+
+src/python-bakeoff-opt/bakeoff_opt/_binary.pyx: pyx_template.j2
+	PREFIX=BAKEOFF_OPT .venv/bin/j2 pyx_template.j2 -o src/python-bakeoff-opt/bakeoff_opt/_binary.pyx
+
 src/python-bakeoff/bakeoff/_binary.c: src/python-bakeoff/bakeoff/_binary.pyx
 	.venv/bin/cython src/python-bakeoff/bakeoff/_binary.pyx
 
