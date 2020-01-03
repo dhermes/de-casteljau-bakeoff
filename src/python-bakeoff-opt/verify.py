@@ -10,31 +10,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import numpy as np
-
 import bakeoff_opt
+import verify_shared
 
 
 def main():
-    fns = (
-        bakeoff_opt.forall1,
-        bakeoff_opt.forall2,
-        bakeoff_opt.forall3,
-        bakeoff_opt.do1,
-        bakeoff_opt.do2,
-        bakeoff_opt.do3,
-        bakeoff_opt.spread1,
-        bakeoff_opt.spread2,
-        bakeoff_opt.spread3,
-        bakeoff_opt.serial,
-    )
-    nodes = np.asfortranarray([[1.0, 1.0, 2.0, 2.0], [0.0, 1.0, 0.0, 1.0]])
-    s_vals = np.asfortranarray([0.0, 0.5, 1.0])
-    expected = np.asfortranarray([[1.0, 1.5, 2.0], [0.0, 0.5, 1.0]])
-    for fn in fns:
-        evaluated = fn(nodes, s_vals)
-        assert np.all(evaluated == expected)
-        print(f"Verified: {fn.__name__}")
+    verify_shared.do_verify(bakeoff_opt)
 
 
 if __name__ == "__main__":
