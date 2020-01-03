@@ -96,8 +96,10 @@ clean:
 	rm -fr \
 	  build/ \
 	  build_opt/ \
+	  src/python-bakeoff-opt/__pycache__/ \
 	  src/python-bakeoff-opt/bakeoff_opt/__pycache__/ \
 	  src/python-bakeoff-opt/build/ \
+	  src/python-bakeoff/__pycache__/ \
 	  src/python-bakeoff/bakeoff/__pycache__/ \
 	  src/python-bakeoff/build/
 	rm -f \
