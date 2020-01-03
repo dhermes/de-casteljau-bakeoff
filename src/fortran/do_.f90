@@ -21,7 +21,9 @@ contains
 
   subroutine do1( &
        num_nodes, dimension_, nodes, num_vals, s_vals, evaluated) &
-       bind(c, name='BAKEOFF_do1')
+       bind(c, name='BAKEOFF&
+       &OPT&
+       &_do1')
 
     integer(c_int), intent(in) :: num_nodes, dimension_
     real(c_double), intent(in) :: nodes(dimension_, num_nodes)
@@ -52,7 +54,9 @@ contains
 
   subroutine do2( &
        num_nodes, dimension_, nodes, num_vals, s_vals, evaluated) &
-       bind(c, name='BAKEOFF_do2')
+       bind(c, name='BAKEOFF&
+       &OPT&
+       &_do2')
 
     integer(c_int), intent(in) :: num_nodes, dimension_
     real(c_double), intent(in) :: nodes(dimension_, num_nodes)
@@ -83,7 +87,9 @@ contains
 
   subroutine do3( &
        num_nodes, dimension_, nodes, num_vals, s_vals, evaluated) &
-       bind(c, name='BAKEOFF_do3')
+       bind(c, name='BAKEOFF&
+       &OPT&
+       &_do3')
 
     integer(c_int), intent(in) :: num_nodes, dimension_
     real(c_double), intent(in) :: nodes(dimension_, num_nodes)

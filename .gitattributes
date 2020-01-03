@@ -1,1 +1,2 @@
 src/python-bakeoff/bakeoff/_binary.c binary
+src/python-bakeoff-opt/bakeoff_opt/_binary.c binary

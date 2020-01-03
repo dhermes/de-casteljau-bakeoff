@@ -10,7 +10,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""Wrapper for ``libbakeoff.so``."""
+"""Wrapper for ``libbakeoffopt.so``."""
 
 
 import os
@@ -26,11 +26,11 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 #       that ``setup.py`` will be in the right place relative to the
 #       **already built** object files.
 EXTRA_OBJECTS = (
-    os.path.join(HERE, "..", "..", "build", "types.o"),
-    os.path.join(HERE, "..", "..", "build", "forall_.o"),
-    os.path.join(HERE, "..", "..", "build", "do_.o"),
-    os.path.join(HERE, "..", "..", "build", "spread_.o"),
-    os.path.join(HERE, "..", "..", "build", "serial_.o"),
+    os.path.join(HERE, "..", "..", "build_opt", "types.o"),
+    os.path.join(HERE, "..", "..", "build_opt", "forall_.o"),
+    os.path.join(HERE, "..", "..", "build_opt", "do_.o"),
+    os.path.join(HERE, "..", "..", "build_opt", "spread_.o"),
+    os.path.join(HERE, "..", "..", "build_opt", "serial_.o"),
 )
 FORTRAN_LIBRARY_PREFIX = "libraries: ="
 GFORTRAN_MISSING_LIBS = """\
@@ -92,8 +92,8 @@ def extension_modules():
         raise RuntimeError("Missing object file(s)", missing)
 
     extension = setuptools.Extension(
-        "bakeoff._binary",
-        [os.path.join("bakeoff", "_binary.c")],
+        "bakeoff_opt._binary",
+        [os.path.join("bakeoff_opt", "_binary.c")],
         extra_objects=EXTRA_OBJECTS,
         include_dirs=[np.get_include()],
         libraries=["gfortran"],
@@ -105,8 +105,8 @@ def extension_modules():
 def main():
     ext_modules = extension_modules()
     setuptools.setup(
-        name="bakeoff",
-        packages=["bakeoff"],
+        name="bakeoff_opt",
+        packages=["bakeoff_opt"],
         install_requires=["numpy"],
         ext_modules=ext_modules,
     )

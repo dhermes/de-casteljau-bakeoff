@@ -15,25 +15,37 @@ help:
 	@echo 'Makefile for `de-casteljau-bakeoff` project'
 	@echo ''
 	@echo 'Usage:'
-	@echo '   make hygiene          Use `emacs` to indent `.f90` files'
-	@echo '   make shared           Create `bakeoff` Python package that wraps Fortran implementations'
-	@echo '   make verify-shared    Verify the `bakeoff` Python package'
-	@echo '   make shared-opt       Create `bakeoff_opt` Python package that wraps (optimized) Fortran implementations'
-	@echo '   make clean            Delete all generated files'
+	@echo '   make hygiene                           Use `emacs` to indent `.f90` files'
+	@echo '   make shared [OPTIMIZED=true]           Create `bakeoff` Python package that wraps Fortran implementations'
+	@echo '   make verify-shared [OPTIMIZED=true]    Verify the `bakeoff` Python package'
+	@echo '   make clean                             Delete all generated files'
 	@echo ''
 
 ################################################################################
 # Variables and configuration
 ################################################################################
 CURR_DIR := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
-BUILD_DIR := $(CURR_DIR)/build
 SRC_DIR := $(CURR_DIR)/src/fortran
 
 FC := gfortran
 F90 := .f90
 OBJ := .o
-BASE_FCFLAGS ?= -fPIC -Wall -Wextra -Wimplicit-interface -Werror -fmax-errors=1 -std=f2008 -J$(BUILD_DIR)
+C_PREPROCESSOR := -cpp
+BASE_FCFLAGS ?= -fPIC -Wall -Wextra -Wimplicit-interface -Werror -fmax-errors=1 -std=f2008
 OPTIMIZED_FCFLAGS ?= -O3 -march=native -ffast-math -funroll-loops
+ifdef OPTIMIZED
+BUILD_DIR := $(CURR_DIR)/build_opt
+FCFLAGS := $(BASE_FCFLAGS) -J$(BUILD_DIR) $(OPTIMIZED_FCFLAGS)
+DOPT := _OPT
+CYTHON_FILE := src/python-bakeoff-opt/bakeoff_opt/_binary.c
+PYTHON_DIR := src/python-bakeoff-opt
+else
+BUILD_DIR := $(CURR_DIR)/build
+FCFLAGS := $(BASE_FCFLAGS) -J$(BUILD_DIR)
+DOPT :=
+CYTHON_FILE := src/python-bakeoff/bakeoff/_binary.c
+PYTHON_DIR := src/python-bakeoff
+endif
 
 # NOTE: **Must** specify the order for source files.
 F90_SOURCES := \
@@ -61,31 +73,34 @@ $(BUILD_DIR):
 	mkdir -p $(BUILD_DIR)
 
 $(BUILD_DIR)/%$(OBJ): $(SRC_DIR)/%$(F90) $(BUILD_DIR)
-	$(FC) $(BASE_FCFLAGS) $(OPTIMIZED_FCFLAGS) -c $< -o $@
+	$(FC) $(C_PREPROCESSOR) -DOPT=$(DOPT) $(FCFLAGS) -c $< -o $@
 
 src/python-bakeoff/bakeoff/_binary.c: src/python-bakeoff/bakeoff/_binary.pyx
 	.venv/bin/cython src/python-bakeoff/bakeoff/_binary.pyx
 
+src/python-bakeoff-opt/bakeoff_opt/_binary.c: src/python-bakeoff-opt/bakeoff_opt/_binary.pyx
+	.venv/bin/cython src/python-bakeoff-opt/bakeoff_opt/_binary.pyx
+
 .PHONY: shared
-shared: $(F90_OBJS) src/python-bakeoff/bakeoff/_binary.c
-	cd src/python-bakeoff/ && \
+shared: $(F90_OBJS) $(CYTHON_FILE)
+	cd $(PYTHON_DIR) && \
 	  ../../.venv/bin/python setup.py build_ext --inplace
 
 .PHONY: verify-shared
-verify-shared: src/python-bakeoff/verify.py
-	cd src/python-bakeoff/ && \
+verify-shared: $(PYTHON_DIR)/verify.py shared
+	cd $(PYTHON_DIR)/ && \
 	  ../../.venv/bin/python verify.py
-
-.PHONY: shared-opt
-shared-opt: $(F90_OBJS)
-	@echo 'TODO'
 
 .PHONY: clean
 clean:
 	rm -fr \
 	  build/ \
+	  build_opt/ \
+	  src/python-bakeoff-opt/bakeoff_opt/__pycache__/ \
+	  src/python-bakeoff-opt/build/ \
 	  src/python-bakeoff/bakeoff/__pycache__/ \
 	  src/python-bakeoff/build/
 	rm -f \
 	  src/fortran/*.f90~ \
-	  src/python-bakeoff/bakeoff/_binary.*.so
+	  src/python-bakeoff/bakeoff/_binary.*.so \
+	  src/python-bakeoff-opt/bakeoff_opt/_binary.*.so

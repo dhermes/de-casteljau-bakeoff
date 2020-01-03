@@ -21,7 +21,9 @@ contains
 
   subroutine serial_implementation( &
        num_nodes, dimension_, nodes, num_vals, s_vals, evaluated) &
-       bind(c, name='BAKEOFF_serial')
+       bind(c, name='BAKEOFF&
+       &OPT&
+       &_serial')
 
     integer(c_int), intent(in) :: num_nodes, dimension_
     real(c_double), intent(in) :: nodes(dimension_, num_nodes)

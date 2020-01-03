@@ -21,7 +21,9 @@ contains
 
   subroutine spread1( &
        num_nodes, dimension_, nodes, num_vals, s_vals, evaluated) &
-       bind(c, name='BAKEOFF_spread1')
+       bind(c, name='BAKEOFF&
+       &OPT&
+       &_spread1')
 
     integer(c_int), intent(in) :: num_nodes, dimension_
     real(c_double), intent(in) :: nodes(dimension_, num_nodes)
@@ -54,7 +56,9 @@ contains
 
   subroutine spread2( &
        num_nodes, dimension_, nodes, num_vals, s_vals, evaluated) &
-       bind(c, name='BAKEOFF_spread2')
+       bind(c, name='BAKEOFF&
+       &OPT&
+       &_spread2')
 
     integer(c_int), intent(in) :: num_nodes, dimension_
     real(c_double), intent(in) :: nodes(dimension_, num_nodes)
@@ -87,7 +91,9 @@ contains
 
   subroutine spread3( &
        num_nodes, dimension_, nodes, num_vals, s_vals, evaluated) &
-       bind(c, name='BAKEOFF_spread3')
+       bind(c, name='BAKEOFF&
+       &OPT&
+       &_spread3')
 
     integer(c_int), intent(in) :: num_nodes, dimension_
     real(c_double), intent(in) :: nodes(dimension_, num_nodes)
