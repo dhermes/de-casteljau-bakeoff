@@ -10,6 +10,4 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""Wrapper for ``libbakeoff.so``."""
-
 from bakeoff._binary import *
