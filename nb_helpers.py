@@ -28,7 +28,7 @@ BAKEOFF_FUNCTIONS = (
     bakeoff.spread2,
     bakeoff.spread3,
     bakeoff.serial,
-    bakeoff.vs_algorithm,
+    bakeoff.vs_algorithm64,
 )
 BAKEOFF_OPT_FUNCTIONS = (
     bakeoff_opt.forall1,
@@ -41,7 +41,7 @@ BAKEOFF_OPT_FUNCTIONS = (
     bakeoff_opt.spread2,
     bakeoff_opt.spread3,
     bakeoff_opt.serial,
-    bakeoff_opt.vs_algorithm,
+    bakeoff_opt.vs_algorithm64,
 )
 
 

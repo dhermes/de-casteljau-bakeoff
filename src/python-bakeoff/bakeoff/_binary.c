@@ -2140,7 +2140,7 @@ __PYX_EXTERN_C DL_IMPORT(void) BAKEOFF_serial(int const *, int const *, double c
 __PYX_EXTERN_C DL_IMPORT(void) BAKEOFF_spread1(int const *, int const *, double const *, int const *, double const *, double *); /*proto*/
 __PYX_EXTERN_C DL_IMPORT(void) BAKEOFF_spread2(int const *, int const *, double const *, int const *, double const *, double *); /*proto*/
 __PYX_EXTERN_C DL_IMPORT(void) BAKEOFF_spread3(int const *, int const *, double const *, int const *, double const *, double *); /*proto*/
-__PYX_EXTERN_C DL_IMPORT(void) BAKEOFF_vs_algorithm(int const *, int const *, double const *, int const *, double const *, double *); /*proto*/
+__PYX_EXTERN_C DL_IMPORT(void) BAKEOFF_vs_algorithm64(int const *, int const *, double const *, int const *, double const *, double *); /*proto*/
 static struct __pyx_array_obj *__pyx_array_new(PyObject *, Py_ssize_t, char *, char *, char *); /*proto*/
 static void *__pyx_align_pointer(void *, size_t); /*proto*/
 static PyObject *__pyx_memoryview_new(PyObject *, int, int, __Pyx_TypeInfo *); /*proto*/
@@ -2264,9 +2264,9 @@ static const char __pyx_k_PickleError[] = "PickleError";
 static const char __pyx_k_RuntimeError[] = "RuntimeError";
 static const char __pyx_k_pyx_checksum[] = "__pyx_checksum";
 static const char __pyx_k_stringsource[] = "stringsource";
-static const char __pyx_k_vs_algorithm[] = "vs_algorithm";
 static const char __pyx_k_pyx_getbuffer[] = "__pyx_getbuffer";
 static const char __pyx_k_reduce_cython[] = "__reduce_cython__";
+static const char __pyx_k_vs_algorithm64[] = "vs_algorithm64";
 static const char __pyx_k_View_MemoryView[] = "View.MemoryView";
 static const char __pyx_k_allocate_buffer[] = "allocate_buffer";
 static const char __pyx_k_bakeoff__binary[] = "bakeoff._binary";
@@ -2427,7 +2427,7 @@ static PyObject *__pyx_kp_s_unable_to_allocate_shape_and_str;
 static PyObject *__pyx_kp_u_unknown_dtype_code_in_numpy_pxd;
 static PyObject *__pyx_n_s_unpack;
 static PyObject *__pyx_n_s_update;
-static PyObject *__pyx_n_s_vs_algorithm;
+static PyObject *__pyx_n_s_vs_algorithm64;
 static PyObject *__pyx_pf_7bakeoff_7_binary_do1(CYTHON_UNUSED PyObject *__pyx_self, __Pyx_memviewslice __pyx_v_nodes, __Pyx_memviewslice __pyx_v_s_vals); /* proto */
 static PyObject *__pyx_pf_7bakeoff_7_binary_2do2(CYTHON_UNUSED PyObject *__pyx_self, __Pyx_memviewslice __pyx_v_nodes, __Pyx_memviewslice __pyx_v_s_vals); /* proto */
 static PyObject *__pyx_pf_7bakeoff_7_binary_4do3(CYTHON_UNUSED PyObject *__pyx_self, __Pyx_memviewslice __pyx_v_nodes, __Pyx_memviewslice __pyx_v_s_vals); /* proto */
@@ -2438,7 +2438,7 @@ static PyObject *__pyx_pf_7bakeoff_7_binary_12serial(CYTHON_UNUSED PyObject *__p
 static PyObject *__pyx_pf_7bakeoff_7_binary_14spread1(CYTHON_UNUSED PyObject *__pyx_self, __Pyx_memviewslice __pyx_v_nodes, __Pyx_memviewslice __pyx_v_s_vals); /* proto */
 static PyObject *__pyx_pf_7bakeoff_7_binary_16spread2(CYTHON_UNUSED PyObject *__pyx_self, __Pyx_memviewslice __pyx_v_nodes, __Pyx_memviewslice __pyx_v_s_vals); /* proto */
 static PyObject *__pyx_pf_7bakeoff_7_binary_18spread3(CYTHON_UNUSED PyObject *__pyx_self, __Pyx_memviewslice __pyx_v_nodes, __Pyx_memviewslice __pyx_v_s_vals); /* proto */
-static PyObject *__pyx_pf_7bakeoff_7_binary_20vs_algorithm(CYTHON_UNUSED PyObject *__pyx_self, __Pyx_memviewslice __pyx_v_nodes, __Pyx_memviewslice __pyx_v_s_vals); /* proto */
+static PyObject *__pyx_pf_7bakeoff_7_binary_20vs_algorithm64(CYTHON_UNUSED PyObject *__pyx_self, __Pyx_memviewslice __pyx_v_nodes, __Pyx_memviewslice __pyx_v_s_vals); /* proto */
 static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, Py_buffer *__pyx_v_info, int __pyx_v_flags); /* proto */
 static void __pyx_pf_5numpy_7ndarray_2__releasebuffer__(PyArrayObject *__pyx_v_self, Py_buffer *__pyx_v_info); /* proto */
 static int __pyx_array___pyx_pf_15View_dot_MemoryView_5array___cinit__(struct __pyx_array_obj *__pyx_v_self, PyObject *__pyx_v_shape, Py_ssize_t __pyx_v_itemsize, PyObject *__pyx_v_format, PyObject *__pyx_v_mode, int __pyx_v_allocate_buffer); /* proto */
@@ -6560,20 +6560,20 @@ static PyObject *__pyx_pf_7bakeoff_7_binary_18spread3(CYTHON_UNUSED PyObject *__
 /* "bakeoff/_binary.pyx":236
  * 
  * 
- * def vs_algorithm(double[::1, :] nodes, double[::1] s_vals):             # <<<<<<<<<<<<<<
+ * def vs_algorithm64(double[::1, :] nodes, double[::1] s_vals):             # <<<<<<<<<<<<<<
  *     cdef int num_nodes, dimension, num_vals
  *     cdef ndarray_t[double, ndim=2, mode="fortran"] evaluated
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_7bakeoff_7_binary_21vs_algorithm(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static PyMethodDef __pyx_mdef_7bakeoff_7_binary_21vs_algorithm = {"vs_algorithm", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_7bakeoff_7_binary_21vs_algorithm, METH_VARARGS|METH_KEYWORDS, 0};
-static PyObject *__pyx_pw_7bakeoff_7_binary_21vs_algorithm(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static PyObject *__pyx_pw_7bakeoff_7_binary_21vs_algorithm64(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static PyMethodDef __pyx_mdef_7bakeoff_7_binary_21vs_algorithm64 = {"vs_algorithm64", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_7bakeoff_7_binary_21vs_algorithm64, METH_VARARGS|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_7bakeoff_7_binary_21vs_algorithm64(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   __Pyx_memviewslice __pyx_v_nodes = { 0, 0, { 0 }, { 0 }, { 0 } };
   __Pyx_memviewslice __pyx_v_s_vals = { 0, 0, { 0 }, { 0 }, { 0 } };
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
-  __Pyx_RefNannySetupContext("vs_algorithm (wrapper)", 0);
+  __Pyx_RefNannySetupContext("vs_algorithm64 (wrapper)", 0);
   {
     static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_nodes,&__pyx_n_s_s_vals,0};
     PyObject* values[2] = {0,0};
@@ -6597,11 +6597,11 @@ static PyObject *__pyx_pw_7bakeoff_7_binary_21vs_algorithm(PyObject *__pyx_self,
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_s_vals)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("vs_algorithm", 1, 2, 2, 1); __PYX_ERR(0, 236, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("vs_algorithm64", 1, 2, 2, 1); __PYX_ERR(0, 236, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "vs_algorithm") < 0)) __PYX_ERR(0, 236, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "vs_algorithm64") < 0)) __PYX_ERR(0, 236, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 2) {
       goto __pyx_L5_argtuple_error;
@@ -6614,20 +6614,20 @@ static PyObject *__pyx_pw_7bakeoff_7_binary_21vs_algorithm(PyObject *__pyx_self,
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("vs_algorithm", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 236, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("vs_algorithm64", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 236, __pyx_L3_error)
   __pyx_L3_error:;
-  __Pyx_AddTraceback("bakeoff._binary.vs_algorithm", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("bakeoff._binary.vs_algorithm64", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_7bakeoff_7_binary_20vs_algorithm(__pyx_self, __pyx_v_nodes, __pyx_v_s_vals);
+  __pyx_r = __pyx_pf_7bakeoff_7_binary_20vs_algorithm64(__pyx_self, __pyx_v_nodes, __pyx_v_s_vals);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_7bakeoff_7_binary_20vs_algorithm(CYTHON_UNUSED PyObject *__pyx_self, __Pyx_memviewslice __pyx_v_nodes, __Pyx_memviewslice __pyx_v_s_vals) {
+static PyObject *__pyx_pf_7bakeoff_7_binary_20vs_algorithm64(CYTHON_UNUSED PyObject *__pyx_self, __Pyx_memviewslice __pyx_v_nodes, __Pyx_memviewslice __pyx_v_s_vals) {
   int __pyx_v_num_nodes;
   int __pyx_v_dimension;
   int __pyx_v_num_vals;
@@ -6652,7 +6652,7 @@ static PyObject *__pyx_pf_7bakeoff_7_binary_20vs_algorithm(CYTHON_UNUSED PyObjec
   Py_ssize_t __pyx_t_14;
   Py_ssize_t __pyx_t_15;
   Py_ssize_t __pyx_t_16;
-  __Pyx_RefNannySetupContext("vs_algorithm", 0);
+  __Pyx_RefNannySetupContext("vs_algorithm64", 0);
   __pyx_pybuffer_evaluated.pybuffer.buf = NULL;
   __pyx_pybuffer_evaluated.refcount = 0;
   __pyx_pybuffernd_evaluated.data = NULL;
@@ -6746,7 +6746,7 @@ static PyObject *__pyx_pf_7bakeoff_7_binary_20vs_algorithm(CYTHON_UNUSED PyObjec
  *     dimension, num_nodes = np.shape(nodes)
  *     num_vals, = np.shape(s_vals)             # <<<<<<<<<<<<<<
  *     evaluated = np.empty((dimension, num_vals), order="F")
- *     BAKEOFF_vs_algorithm(
+ *     BAKEOFF_vs_algorithm64(
  */
   __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 241, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
@@ -6818,7 +6818,7 @@ static PyObject *__pyx_pf_7bakeoff_7_binary_20vs_algorithm(CYTHON_UNUSED PyObjec
  *     dimension, num_nodes = np.shape(nodes)
  *     num_vals, = np.shape(s_vals)
  *     evaluated = np.empty((dimension, num_vals), order="F")             # <<<<<<<<<<<<<<
- *     BAKEOFF_vs_algorithm(
+ *     BAKEOFF_vs_algorithm64(
  *         &num_nodes,
  */
   __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 242, __pyx_L1_error)
@@ -6906,11 +6906,11 @@ static PyObject *__pyx_pf_7bakeoff_7_binary_20vs_algorithm(CYTHON_UNUSED PyObjec
   /* "bakeoff/_binary.pyx":243
  *     num_vals, = np.shape(s_vals)
  *     evaluated = np.empty((dimension, num_vals), order="F")
- *     BAKEOFF_vs_algorithm(             # <<<<<<<<<<<<<<
+ *     BAKEOFF_vs_algorithm64(             # <<<<<<<<<<<<<<
  *         &num_nodes,
  *         &dimension,
  */
-  BAKEOFF_vs_algorithm((&__pyx_v_num_nodes), (&__pyx_v_dimension), (&(*((double *) ( /* dim=1 */ (( /* dim=0 */ ((char *) (((double *) __pyx_v_nodes.data) + __pyx_t_12)) ) + __pyx_t_13 * __pyx_v_nodes.strides[1]) )))), (&__pyx_v_num_vals), (&(*((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_s_vals.data) + __pyx_t_14)) )))), (&(*__Pyx_BufPtrFortranContig2d(double *, __pyx_pybuffernd_evaluated.rcbuffer->pybuffer.buf, __pyx_t_15, __pyx_pybuffernd_evaluated.diminfo[0].strides, __pyx_t_16, __pyx_pybuffernd_evaluated.diminfo[1].strides))));
+  BAKEOFF_vs_algorithm64((&__pyx_v_num_nodes), (&__pyx_v_dimension), (&(*((double *) ( /* dim=1 */ (( /* dim=0 */ ((char *) (((double *) __pyx_v_nodes.data) + __pyx_t_12)) ) + __pyx_t_13 * __pyx_v_nodes.strides[1]) )))), (&__pyx_v_num_vals), (&(*((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_s_vals.data) + __pyx_t_14)) )))), (&(*__Pyx_BufPtrFortranContig2d(double *, __pyx_pybuffernd_evaluated.rcbuffer->pybuffer.buf, __pyx_t_15, __pyx_pybuffernd_evaluated.diminfo[0].strides, __pyx_t_16, __pyx_pybuffernd_evaluated.diminfo[1].strides))));
 
   /* "bakeoff/_binary.pyx":251
  *         &evaluated[0, 0],
@@ -6925,7 +6925,7 @@ static PyObject *__pyx_pf_7bakeoff_7_binary_20vs_algorithm(CYTHON_UNUSED PyObjec
   /* "bakeoff/_binary.pyx":236
  * 
  * 
- * def vs_algorithm(double[::1, :] nodes, double[::1] s_vals):             # <<<<<<<<<<<<<<
+ * def vs_algorithm64(double[::1, :] nodes, double[::1] s_vals):             # <<<<<<<<<<<<<<
  *     cdef int num_nodes, dimension, num_vals
  *     cdef ndarray_t[double, ndim=2, mode="fortran"] evaluated
  */
@@ -6942,7 +6942,7 @@ static PyObject *__pyx_pf_7bakeoff_7_binary_20vs_algorithm(CYTHON_UNUSED PyObjec
     __Pyx_ErrFetch(&__pyx_type, &__pyx_value, &__pyx_tb);
     __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_evaluated.rcbuffer->pybuffer);
   __Pyx_ErrRestore(__pyx_type, __pyx_value, __pyx_tb);}
-  __Pyx_AddTraceback("bakeoff._binary.vs_algorithm", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("bakeoff._binary.vs_algorithm64", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   goto __pyx_L2;
   __pyx_L0:;
@@ -23077,7 +23077,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_kp_u_unknown_dtype_code_in_numpy_pxd, __pyx_k_unknown_dtype_code_in_numpy_pxd, sizeof(__pyx_k_unknown_dtype_code_in_numpy_pxd), 0, 1, 0, 0},
   {&__pyx_n_s_unpack, __pyx_k_unpack, sizeof(__pyx_k_unpack), 0, 0, 1, 1},
   {&__pyx_n_s_update, __pyx_k_update, sizeof(__pyx_k_update), 0, 0, 1, 1},
-  {&__pyx_n_s_vs_algorithm, __pyx_k_vs_algorithm, sizeof(__pyx_k_vs_algorithm), 0, 0, 1, 1},
+  {&__pyx_n_s_vs_algorithm64, __pyx_k_vs_algorithm64, sizeof(__pyx_k_vs_algorithm64), 0, 0, 1, 1},
   {0, 0, 0, 0, 0, 0, 0}
 };
 static CYTHON_SMALL_CODE int __Pyx_InitCachedBuiltins(void) {
@@ -23492,14 +23492,14 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   /* "bakeoff/_binary.pyx":236
  * 
  * 
- * def vs_algorithm(double[::1, :] nodes, double[::1] s_vals):             # <<<<<<<<<<<<<<
+ * def vs_algorithm64(double[::1, :] nodes, double[::1] s_vals):             # <<<<<<<<<<<<<<
  *     cdef int num_nodes, dimension, num_vals
  *     cdef ndarray_t[double, ndim=2, mode="fortran"] evaluated
  */
   __pyx_tuple__46 = PyTuple_Pack(6, __pyx_n_s_nodes, __pyx_n_s_s_vals, __pyx_n_s_num_nodes, __pyx_n_s_dimension, __pyx_n_s_num_vals, __pyx_n_s_evaluated); if (unlikely(!__pyx_tuple__46)) __PYX_ERR(0, 236, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__46);
   __Pyx_GIVEREF(__pyx_tuple__46);
-  __pyx_codeobj__47 = (PyObject*)__Pyx_PyCode_New(2, 0, 6, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__46, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_src_python_bakeoff_bakeoff__bina, __pyx_n_s_vs_algorithm, 236, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__47)) __PYX_ERR(0, 236, __pyx_L1_error)
+  __pyx_codeobj__47 = (PyObject*)__Pyx_PyCode_New(2, 0, 6, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__46, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_src_python_bakeoff_bakeoff__bina, __pyx_n_s_vs_algorithm64, 236, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__47)) __PYX_ERR(0, 236, __pyx_L1_error)
 
   /* "View.MemoryView":286
  *         return self.name
@@ -24068,13 +24068,13 @@ if (!__Pyx_RefNanny) {
   /* "bakeoff/_binary.pyx":236
  * 
  * 
- * def vs_algorithm(double[::1, :] nodes, double[::1] s_vals):             # <<<<<<<<<<<<<<
+ * def vs_algorithm64(double[::1, :] nodes, double[::1] s_vals):             # <<<<<<<<<<<<<<
  *     cdef int num_nodes, dimension, num_vals
  *     cdef ndarray_t[double, ndim=2, mode="fortran"] evaluated
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_7bakeoff_7_binary_21vs_algorithm, NULL, __pyx_n_s_bakeoff__binary); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 236, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_7bakeoff_7_binary_21vs_algorithm64, NULL, __pyx_n_s_bakeoff__binary); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 236, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_vs_algorithm, __pyx_t_1) < 0) __PYX_ERR(0, 236, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_vs_algorithm64, __pyx_t_1) < 0) __PYX_ERR(0, 236, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
   /* "bakeoff/_binary.pyx":1

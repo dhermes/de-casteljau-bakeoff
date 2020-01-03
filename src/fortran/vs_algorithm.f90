@@ -15,15 +15,15 @@ module vs_algorithm
   use, intrinsic :: iso_c_binding, only: c_double, c_int, c_int64_t
   use types, only: dp
   implicit none
-  public vs_algorithm_implementation
+  public vs_algorithm64
 
 contains
 
-  subroutine vs_algorithm_implementation( &
+  subroutine vs_algorithm64( &
        num_nodes, dimension_, nodes, num_vals, s_vals, evaluated) &
        bind(c, name='BAKEOFF&
        &OPT&
-       &_vs_algorithm')
+       &_vs_algorithm64')
 
     integer(c_int), intent(in) :: num_nodes, dimension_
     real(c_double), intent(in) :: nodes(dimension_, num_nodes)
@@ -59,6 +59,6 @@ contains
             s_pow(i) * s_vals(i) * nodes(:, num_nodes))
     end forall
 
-  end subroutine vs_algorithm_implementation
+  end subroutine vs_algorithm64
 
 end module vs_algorithm

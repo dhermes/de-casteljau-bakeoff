@@ -48,7 +48,7 @@ cdef extern void BAKEOFF_OPT_spread2(
 cdef extern void BAKEOFF_OPT_spread3(
     const int* num_nodes, const int* dimension, const double* nodes,
     const int* num_vals, const double* s_vals, double* evaluated)
-cdef extern void BAKEOFF_OPT_vs_algorithm(
+cdef extern void BAKEOFF_OPT_vs_algorithm64(
     const int* num_nodes, const int* dimension, const double* nodes,
     const int* num_vals, const double* s_vals, double* evaluated)
 
@@ -233,14 +233,14 @@ def spread3(double[::1, :] nodes, double[::1] s_vals):
     return evaluated
 
 
-def vs_algorithm(double[::1, :] nodes, double[::1] s_vals):
+def vs_algorithm64(double[::1, :] nodes, double[::1] s_vals):
     cdef int num_nodes, dimension, num_vals
     cdef ndarray_t[double, ndim=2, mode="fortran"] evaluated
 
     dimension, num_nodes = np.shape(nodes)
     num_vals, = np.shape(s_vals)
     evaluated = np.empty((dimension, num_vals), order="F")
-    BAKEOFF_OPT_vs_algorithm(
+    BAKEOFF_OPT_vs_algorithm64(
         &num_nodes,
         &dimension,
         &nodes[0, 0],
