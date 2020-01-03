@@ -11,6 +11,7 @@
 # limitations under the License.
 
 import os
+import pathlib
 import subprocess
 import sys
 
@@ -72,24 +73,36 @@ def gfortran_search_path():
     return sorted(accepted)
 
 
-def get_extra_objects(here, build_dir):
-    # NOTE: This is a **massive** shortcut and should not be done. This assumes
-    #       that ``here`` will be in the right place relative to the
-    #       **already built** object files.
+def get_extra_objects(here):
     return (
-        os.path.join(here, "..", "..", build_dir, "types.o"),
-        os.path.join(here, "..", "..", build_dir, "forall_.o"),
-        os.path.join(here, "..", "..", build_dir, "do_.o"),
-        os.path.join(here, "..", "..", build_dir, "spread_.o"),
-        os.path.join(here, "..", "..", build_dir, "serial_.o"),
+        os.path.join(here, "object_files", "types.o"),
+        os.path.join(here, "object_files", "forall_.o"),
+        os.path.join(here, "object_files", "do_.o"),
+        os.path.join(here, "object_files", "spread_.o"),
+        os.path.join(here, "object_files", "serial_.o"),
     )
 
 
-def extension_modules(here, name, build_dir):
-    extra_objects = get_extra_objects(here, build_dir)
+def extension_modules(here, name):
+    extra_objects = get_extra_objects(here)
     missing = [path for path in extra_objects if not os.path.isfile(path)]
     if missing:
-        raise RuntimeError("Missing object file(s)", missing)
+        parts = ["Missing object file(s):"]
+        parts.extend(f"- {path}" for path in missing)
+        parts.extend(
+            [
+                "",
+                f"here: {here}",
+                f"__file__: {__file__}",
+                "",
+                "files in `here`:",
+            ]
+        )
+        files_here = pathlib.Path(here).glob("*")
+        parts.extend(f"- {path}" for path in files_here)
+
+        msg = "\n".join(parts)
+        raise RuntimeError(msg)
 
     extension = setuptools.Extension(
         f"{name}._binary",
@@ -102,8 +115,8 @@ def extension_modules(here, name, build_dir):
     return [extension]
 
 
-def do_setup(here, name, build_dir):
-    ext_modules = extension_modules(here, name, build_dir)
+def do_setup(here, name):
+    ext_modules = extension_modules(here, name)
     setuptools.setup(
         name=name,
         packages=[name],

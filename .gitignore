@@ -133,4 +133,5 @@ dmypy.json
 
 # `gfortran` / Build artifacts
 *.mod
-build_opt/
+src/python-bakeoff-opt/object_files/
+src/python-bakeoff/object_files/

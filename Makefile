@@ -15,13 +15,14 @@ help:
 	@echo 'Makefile for `de-casteljau-bakeoff` project'
 	@echo ''
 	@echo 'Usage:'
-	@echo '   make venv                              Create Python virtual environment'
-	@echo '   make run-jupyter                       Run Jupyter notebook(s)'
-	@echo '   make update-requirements               Update Python requirements'
-	@echo '   make hygiene                           Use `emacs` to indent `.f90` files'
-	@echo '   make shared [OPTIMIZED=true]           Create `bakeoff` Python package that wraps Fortran implementations'
-	@echo '   make verify-shared [OPTIMIZED=true]    Verify the `bakeoff` Python package'
-	@echo '   make clean                             Delete all generated files'
+	@echo '   make venv                               Create Python virtual environment'
+	@echo '   make run-jupyter                        Run Jupyter notebook(s)'
+	@echo '   make update-requirements                Update Python requirements'
+	@echo '   make hygiene                            Use `emacs` to indent `.f90` files'
+	@echo '   make shared [OPTIMIZED=true]            Build `bakeoff(_opt)` Python package that wraps Fortran implementations'
+	@echo '   make install-shared [OPTIMIZED=true]    Install `bakeoff(_opt)` Python package into virtual environment'
+	@echo '   make verify-shared [OPTIMIZED=true]     Verify the `bakeoff(_opt)` Python package'
+	@echo '   make clean                              Delete all generated files'
 	@echo ''
 
 ################################################################################
@@ -37,17 +38,17 @@ C_PREPROCESSOR := -cpp
 BASE_FCFLAGS ?= -fPIC -Wall -Wextra -Wimplicit-interface -Werror -fmax-errors=1 -std=f2008
 OPTIMIZED_FCFLAGS ?= -O3 -march=native -ffast-math -funroll-loops
 ifdef OPTIMIZED
-BUILD_DIR := $(CURR_DIR)/build_opt
+PYTHON_DIR := src/python-bakeoff-opt
+BUILD_DIR := $(PYTHON_DIR)/object_files
 FCFLAGS := $(BASE_FCFLAGS) -J$(BUILD_DIR) $(OPTIMIZED_FCFLAGS)
 DOPT := _OPT
 CYTHON_FILE := src/python-bakeoff-opt/bakeoff_opt/_binary.c
-PYTHON_DIR := src/python-bakeoff-opt
 else
-BUILD_DIR := $(CURR_DIR)/build
+PYTHON_DIR := src/python-bakeoff
+BUILD_DIR := $(PYTHON_DIR)/object_files
 FCFLAGS := $(BASE_FCFLAGS) -J$(BUILD_DIR)
 DOPT :=
 CYTHON_FILE := src/python-bakeoff/bakeoff/_binary.c
-PYTHON_DIR := src/python-bakeoff
 endif
 
 # NOTE: **Must** specify the order for source files.
@@ -87,6 +88,9 @@ hygiene:
 		--funcall mark-whole-buffer \
 		--funcall f90-indent-subprogram \
 		--funcall save-buffer
+	diff -s -q \
+	  src/python-bakeoff/setup_shared.py \
+	  src/python-bakeoff-opt/setup_shared.py
 
 $(BUILD_DIR):
 	mkdir -p $(BUILD_DIR)
@@ -111,6 +115,10 @@ shared: $(F90_OBJS) $(CYTHON_FILE)
 	cd $(PYTHON_DIR) && \
 	  ../../.venv/bin/python setup.py build_ext --inplace
 
+.PHONY: install-shared
+install-shared: $(F90_OBJS) $(CYTHON_FILE)
+	.venv/bin/python -m pip install $(PYTHON_DIR)
+
 .PHONY: verify-shared
 verify-shared: $(PYTHON_DIR)/verify.py shared
 	cd $(PYTHON_DIR)/ && \
@@ -119,14 +127,14 @@ verify-shared: $(PYTHON_DIR)/verify.py shared
 .PHONY: clean
 clean:
 	rm -fr \
-	  build/ \
-	  build_opt/ \
 	  src/python-bakeoff-opt/__pycache__/ \
 	  src/python-bakeoff-opt/bakeoff_opt/__pycache__/ \
 	  src/python-bakeoff-opt/build/ \
+	  src/python-bakeoff-opt/object_files/ \
 	  src/python-bakeoff/__pycache__/ \
 	  src/python-bakeoff/bakeoff/__pycache__/ \
-	  src/python-bakeoff/build/
+	  src/python-bakeoff/build/ \
+	  src/python-bakeoff/object_files/
 	rm -f \
 	  src/fortran/*.f90~ \
 	  src/python-bakeoff/bakeoff/_binary.*.so \

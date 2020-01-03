@@ -17,7 +17,7 @@ import setup_shared
 
 def main():
     here = os.path.dirname(os.path.abspath(__file__))
-    setup_shared.do_setup(here, "bakeoff", "build")
+    setup_shared.do_setup(here, "bakeoff")
 
 
 if __name__ == "__main__":

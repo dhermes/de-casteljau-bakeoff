@@ -10,13 +10,14 @@ $ make
 Makefile for `de-casteljau-bakeoff` project
 
 Usage:
-   make venv                              Create Python virtual environment
-   make run-jupyter                       Run Jupyter notebook(s)
-   make update-requirements               Update Python requirements
-   make hygiene                           Use `emacs` to indent `.f90` files
-   make shared [OPTIMIZED=true]           Create `bakeoff` Python package that wraps Fortran implementations
-   make verify-shared [OPTIMIZED=true]    Verify the `bakeoff` Python package
-   make clean                             Delete all generated files
+   make venv                               Create Python virtual environment
+   make run-jupyter                        Run Jupyter notebook(s)
+   make update-requirements                Update Python requirements
+   make hygiene                            Use `emacs` to indent `.f90` files
+   make shared [OPTIMIZED=true]            Build `bakeoff(_opt)` Python package that wraps Fortran implementations
+   make install-shared [OPTIMIZED=true]    Install `bakeoff(_opt)` Python package into virtual environment
+   make verify-shared [OPTIMIZED=true]     Verify the `bakeoff(_opt)` Python package
+   make clean                              Delete all generated files
 
 ```
 
@@ -24,6 +25,8 @@ Usage:
 
 ```
 make venv
+make install-shared
+make install-shared OPTIMIZED=true
 make run-jupyter
 ```
 
