@@ -42,13 +42,13 @@ PYTHON_DIR := src/python-bakeoff-opt
 BUILD_DIR := $(PYTHON_DIR)/object_files
 FCFLAGS := $(BASE_FCFLAGS) -J$(BUILD_DIR) $(OPTIMIZED_FCFLAGS)
 DOPT := _OPT
-CYTHON_FILE := src/python-bakeoff-opt/bakeoff_opt/_binary.c
+CYTHON_FILE := $(PYTHON_DIR)/bakeoff_opt/_binary.c
 else
 PYTHON_DIR := src/python-bakeoff
 BUILD_DIR := $(PYTHON_DIR)/object_files
 FCFLAGS := $(BASE_FCFLAGS) -J$(BUILD_DIR)
 DOPT :=
-CYTHON_FILE := src/python-bakeoff/bakeoff/_binary.c
+CYTHON_FILE := $(PYTHON_DIR)/bakeoff/_binary.c
 endif
 
 # NOTE: **Must** specify the order for source files.
