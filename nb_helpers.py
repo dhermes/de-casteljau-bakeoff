@@ -154,11 +154,11 @@ def time_function(get_ipython, results_cache, fn, num_nodes, num_values, seed):
 
 
 def new_axis():
-    figure = plt.figure()
+    figure = plt.figure(figsize=(18, 12), dpi=80)
     return figure.gca()
 
 
-def plot_data(
+def plot_data_nodes(
     get_ipython, results_cache, functions, num_nodes_list, num_values, seed
 ):
     ax = new_axis()
@@ -194,6 +194,7 @@ def plot_data(
     ax.set_title(f"Number of Input Values: {num_values}")
     ax.set_xlabel("Number of Nodes")
     ax.set_ylabel("Average Evaluation Time (s)")
+    ax.axis("scaled")
     ax.legend()
 
 
@@ -241,3 +242,43 @@ def compare_bakeoff_times(
         num_values,
         seed,
     )
+
+
+def plot_data_values(
+    get_ipython, results_cache, functions, num_nodes, num_values_list, seed
+):
+    ax = new_axis()
+
+    for fn in functions:
+        x_vals = []
+        y_vals = []
+        y_below = []
+        y_above = []
+        for num_values in num_values_list:
+            timeit_result = time_function(
+                get_ipython, results_cache, fn, num_nodes, num_values, seed
+            )
+            # 2 std deviations ~= 95%
+            below = timeit_result.average - 2.0 * timeit_result.stdev
+            above = timeit_result.average + 2.0 * timeit_result.stdev
+            # If the running time goes non-positive, ignore the datapoint
+            if below <= 0.0:
+                continue
+
+            x_vals.append(num_values)
+            y_vals.append(timeit_result.average)
+            y_below.append(below)
+            y_above.append(above)
+
+        line, = ax.loglog(x_vals, y_vals, marker="o", label=fn.__name__)
+        ax.fill_between(
+            x_vals, y_below, y_above, alpha=0.5, color=line.get_color()
+        )
+
+    ax.set_xscale("log", basex=2)
+    ax.set_yscale("log", basey=2)
+    ax.set_title(f"Number of Nodes: {num_nodes}")
+    ax.set_xlabel("Number of Input Values")
+    ax.set_ylabel("Average Evaluation Time (s)")
+    ax.axis("scaled")
+    ax.legend()
