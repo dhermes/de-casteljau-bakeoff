@@ -184,7 +184,7 @@ def plot_data_nodes(
             y_below.append(below)
             y_above.append(above)
 
-        line, = ax.loglog(x_vals, y_vals, marker="o", label=fn.__name__)
+        (line,) = ax.loglog(x_vals, y_vals, marker="o", label=fn.__name__)
         ax.fill_between(
             x_vals, y_below, y_above, alpha=0.5, color=line.get_color()
         )
@@ -270,7 +270,7 @@ def plot_data_values(
             y_below.append(below)
             y_above.append(above)
 
-        line, = ax.loglog(x_vals, y_vals, marker="o", label=fn.__name__)
+        (line,) = ax.loglog(x_vals, y_vals, marker="o", label=fn.__name__)
         ax.fill_between(
             x_vals, y_below, y_above, alpha=0.5, color=line.get_color()
         )

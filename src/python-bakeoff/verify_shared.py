@@ -13,6 +13,19 @@
 import numpy as np
 
 
+def from_serial_inner(bakeoff_module):
+    def serial_inner(nodes, s_vals):
+        dimension, _ = nodes.shape
+        (num_vals,) = s_vals.shape
+        evaluated = np.empty((dimension, num_vals), order="F")
+        for j in range(num_vals):
+            evaluated[:, j] = bakeoff_module.serial_inner(nodes, s_vals[j])
+
+        return evaluated
+
+    return serial_inner
+
+
 def do_verify(bakeoff_module):
     print(f"Verifying: {bakeoff_module}")
     functions = (
@@ -26,6 +39,7 @@ def do_verify(bakeoff_module):
         bakeoff_module.spread2,
         bakeoff_module.spread3,
         bakeoff_module.serial,
+        from_serial_inner(bakeoff_module),
         bakeoff_module.vs_algorithm32,
         bakeoff_module.vs_algorithm53,
         bakeoff_module.vs_algorithm64,

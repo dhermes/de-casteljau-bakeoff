@@ -39,6 +39,9 @@ cdef extern void BAKEOFF_forall3(
 cdef extern void BAKEOFF_serial(
     const int* num_nodes, const int* dimension, const double* nodes,
     const int* num_vals, const double* s_vals, double* evaluated)
+cdef extern void BAKEOFF_serial_inner(
+    const int* num_nodes, const int* dimension, const double* nodes,
+    const double* s_val, double* evaluated)
 cdef extern void BAKEOFF_spread1(
     const int* num_nodes, const int* dimension, const double* nodes,
     const int* num_vals, const double* s_vals, double* evaluated)
@@ -181,6 +184,22 @@ def serial(double[::1, :] nodes, double[::1] s_vals):
         &num_vals,
         &s_vals[0],
         &evaluated[0, 0],
+    )
+    return evaluated
+
+
+def serial_inner(double[::1, :] nodes, double s_val):
+    cdef int num_nodes, dimension
+    cdef ndarray_t[double, ndim=1, mode="fortran"] evaluated
+
+    dimension, num_nodes = np.shape(nodes)
+    evaluated = np.empty((dimension,), order="F")
+    BAKEOFF_serial_inner(
+        &num_nodes,
+        &dimension,
+        &nodes[0, 0],
+        &s_val,
+        &evaluated[0],
     )
     return evaluated
 
