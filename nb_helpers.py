@@ -10,13 +10,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-
-import numpy as np
+import pathlib
+import pickle
 
 import bakeoff
 import bakeoff_opt
+import matplotlib.pyplot as plt
+import numpy as np
 
 
+HERE = pathlib.Path(__file__).resolve().parent
+STORED_RESULTS = HERE / "timeit_results.pkl"
 BAKEOFF_FUNCTIONS = (
     bakeoff.forall1,
     bakeoff.forall2,
@@ -55,10 +59,10 @@ def fn_name(fn):
 
 def verify_implementations(nodes, s_vals, substring_match=None):
     points = bakeoff.serial(nodes, s_vals)
-    fns = BAKEOFF_FUNCTIONS + BAKEOFF_OPT_FUNCTIONS
+    functions = BAKEOFF_FUNCTIONS + BAKEOFF_OPT_FUNCTIONS
 
     equals = {}
-    for fn in fns:
+    for fn in functions:
         key = fn_name(fn)
         points_also = fn(nodes, s_vals)
         if key in equals:
@@ -80,6 +84,7 @@ def verify_implementations(nodes, s_vals, substring_match=None):
 
 
 def generate_nodes(num_nodes, num_values, seed):
+    # TODO: Cache outputs?
     random_state = np.random.RandomState(seed=seed)
     x = sorted(random_state.randint(1000, size=num_nodes))
     y = sorted(random_state.randint(1000, size=num_nodes))
@@ -102,3 +107,137 @@ def sort_results(timeit_results):
     Assumes ``timeit_results`` contains pairs of the form.
     """
     return sorted(timeit_results, key=_compare_pair)
+
+
+def get_timeit_results():
+    # Load previous results from disk.
+    # NOTE: This is a bad idea if these benchmarks are being
+    #       run on multiple machines.
+    if not STORED_RESULTS.is_file():
+        return {}
+
+    with open(STORED_RESULTS, "rb") as file_obj:
+        return pickle.load(file_obj)
+
+
+def store_timeit_results(results_cache):
+    with open(STORED_RESULTS, "wb") as file_obj:
+        pickle.dump(results_cache, file_obj)
+
+
+def timeit(get_ipython, fn, *args, **kwargs):
+    """Invoke the IPython timeit line magic.
+
+    Determined how this worked via:
+
+    >>> import dis
+    >>>
+    >>> def capture_line_magic(fn):
+    ...     timeit_result = %timeit -o -q fn()
+    ...     return timeit_result
+    ...
+    >>> dis.dis(capture_line_magic)
+    """
+    timeit_result = get_ipython().run_line_magic(
+        "timeit", "-o -q fn(*args, **kwargs)"
+    )
+    return timeit_result
+
+
+def time_function(get_ipython, results_cache, fn, num_nodes, num_values, seed):
+    key = (fn_name(fn), num_nodes, num_values, seed)
+    if key not in results_cache:
+        nodes, s_vals = generate_nodes(num_nodes, num_values, seed)
+        results_cache[key] = timeit(get_ipython, fn, nodes, s_vals)
+
+    return results_cache[key]
+
+
+def new_axis():
+    figure = plt.figure()
+    return figure.gca()
+
+
+def plot_data(
+    get_ipython, results_cache, functions, num_nodes_list, num_values, seed
+):
+    ax = new_axis()
+
+    for fn in functions:
+        x_vals = []
+        y_vals = []
+        y_below = []
+        y_above = []
+        for num_nodes in num_nodes_list:
+            timeit_result = time_function(
+                get_ipython, results_cache, fn, num_nodes, num_values, seed
+            )
+            # 2 std deviations ~= 95%
+            below = timeit_result.average - 2.0 * timeit_result.stdev
+            above = timeit_result.average + 2.0 * timeit_result.stdev
+            # If the running time goes non-positive, ignore the datapoint
+            if below <= 0.0:
+                continue
+
+            x_vals.append(num_nodes)
+            y_vals.append(timeit_result.average)
+            y_below.append(below)
+            y_above.append(above)
+
+        line, = ax.loglog(x_vals, y_vals, marker="o", label=fn.__name__)
+        ax.fill_between(
+            x_vals, y_below, y_above, alpha=0.5, color=line.get_color()
+        )
+
+    ax.set_xscale("log", basex=2)
+    ax.set_yscale("log", basey=2)
+    ax.set_title(f"Number of Input Values: {num_values}")
+    ax.set_xlabel("Number of Nodes")
+    ax.set_ylabel("Average Evaluation Time (s)")
+    ax.legend()
+
+
+def _compare_times(
+    get_ipython, results_cache, functions, num_nodes, num_values, seed
+):
+    timeit_results = []
+    for fn in functions:
+        name = fn.__name__
+        timeit_result = time_function(
+            get_ipython, results_cache, fn, num_nodes, num_values, seed
+        )
+        timeit_results.append((name, timeit_result))
+
+    timeit_results = sort_results(timeit_results)
+    max_width = max(len(name) for name, _ in timeit_results)
+
+    for name, timeit_result in timeit_results:
+        print(f"{name:{max_width}}: {timeit_result}")
+
+
+def compare_bakeoff_times(
+    get_ipython, results_cache, num_nodes, num_values, seed
+):
+    print("Non-Optimized Implementations")
+    print("-----------------------------")
+    _compare_times(
+        get_ipython,
+        results_cache,
+        BAKEOFF_FUNCTIONS,
+        num_nodes,
+        num_values,
+        seed,
+    )
+
+    print("")
+
+    print("Optimized Implementations")
+    print("-------------------------")
+    _compare_times(
+        get_ipython,
+        results_cache,
+        BAKEOFF_OPT_FUNCTIONS,
+        num_nodes,
+        num_values,
+        seed,
+    )
