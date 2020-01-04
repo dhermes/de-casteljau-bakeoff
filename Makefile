@@ -17,6 +17,7 @@ help:
 	@echo 'Usage:'
 	@echo '   make venv                               Create Python virtual environment'
 	@echo '   make run-jupyter                        Run Jupyter notebook(s)'
+	@echo '   make trisurf                            Plot interactive 3D plots displaying runtime against number of nodes and values'
 	@echo '   make update-requirements                Update Python requirements'
 	@echo '   make hygiene                            Autoformat `.f90` and `.py` files and verify "copied" files'
 	@echo '   make shared [OPTIMIZED=true]            Build `bakeoff(_opt)` Python package that wraps Fortran implementations'
@@ -74,6 +75,10 @@ venv:
 .PHONY: run-jupyter
 run-jupyter:
 	.venv/bin/jupyter notebook
+
+.PHONY: trisurf
+trisurf: plot_trisurf.py
+	.venv/bin/python plot_trisurf.py
 
 requirements.txt: requirements.txt.in
 	.venv/bin/pip-compile --generate-hashes --upgrade --output-file=requirements.txt requirements.txt.in

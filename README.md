@@ -12,6 +12,7 @@ Makefile for `de-casteljau-bakeoff` project
 Usage:
    make venv                               Create Python virtual environment
    make run-jupyter                        Run Jupyter notebook(s)
+   make trisurf                            Plot interactive 3D plots displaying runtime against number of nodes and values
    make update-requirements                Update Python requirements
    make hygiene                            Autoformat `.f90` and `.py` files and verify "copied" files
    make shared [OPTIMIZED=true]            Build `bakeoff(_opt)` Python package that wraps Fortran implementations
