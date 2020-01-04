@@ -15,7 +15,7 @@ import numpy as np
 
 def do_verify(bakeoff_module):
     print(f"Verifying: {bakeoff_module}")
-    fns = (
+    functions = (
         bakeoff_module.forall1,
         bakeoff_module.forall2,
         bakeoff_module.forall3,
@@ -33,7 +33,7 @@ def do_verify(bakeoff_module):
     nodes = np.asfortranarray([[1.0, 1.0, 2.0, 2.0], [0.0, 1.0, 0.0, 1.0]])
     s_vals = np.asfortranarray([0.0, 0.5, 1.0])
     expected = np.asfortranarray([[1.0, 1.5, 2.0], [0.0, 0.5, 1.0]])
-    for fn in fns:
+    for fn in functions:
         evaluated = fn(nodes, s_vals)
         assert np.all(evaluated == expected)
         print(f"Verified: {fn.__name__}")
