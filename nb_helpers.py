@@ -28,6 +28,8 @@ BAKEOFF_FUNCTIONS = (
     bakeoff.spread2,
     bakeoff.spread3,
     bakeoff.serial,
+    bakeoff.vs_algorithm32,
+    bakeoff.vs_algorithm53,
     bakeoff.vs_algorithm64,
 )
 BAKEOFF_OPT_FUNCTIONS = (
@@ -41,6 +43,8 @@ BAKEOFF_OPT_FUNCTIONS = (
     bakeoff_opt.spread2,
     bakeoff_opt.spread3,
     bakeoff_opt.serial,
+    bakeoff_opt.vs_algorithm32,
+    bakeoff_opt.vs_algorithm53,
     bakeoff_opt.vs_algorithm64,
 )
 
@@ -49,7 +53,7 @@ def fn_name(fn):
     return f"{fn.__module__.replace('._binary', '')}.{fn.__qualname__}"
 
 
-def verify_implementations(nodes, s_vals):
+def verify_implementations(nodes, s_vals, substring_match=None):
     points = bakeoff.serial(nodes, s_vals)
     fns = BAKEOFF_FUNCTIONS + BAKEOFF_OPT_FUNCTIONS
 
@@ -67,7 +71,12 @@ def verify_implementations(nodes, s_vals):
         else:
             equals[key] = "DIFFERENT"
 
-    return equals
+    if substring_match is None:
+        return equals
+
+    return {
+        key: value for key, value in equals.items() if substring_match in key
+    }
 
 
 def generate_nodes(num_nodes, num_values, seed):

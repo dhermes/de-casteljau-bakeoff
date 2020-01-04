@@ -26,6 +26,8 @@ def do_verify(bakeoff_module):
         bakeoff_module.spread2,
         bakeoff_module.spread3,
         bakeoff_module.serial,
+        bakeoff_module.vs_algorithm32,
+        bakeoff_module.vs_algorithm53,
         bakeoff_module.vs_algorithm64,
     )
     nodes = np.asfortranarray([[1.0, 1.0, 2.0, 2.0], [0.0, 1.0, 0.0, 1.0]])
